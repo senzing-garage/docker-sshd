@@ -3,7 +3,7 @@ FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2020-07-22
 
-LABEL Name="senzing/senzing-console" \
+LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
       Version="1.0.0"
 
@@ -68,4 +68,5 @@ COPY ./rootfs /
 # Runtime execution.
 
 WORKDIR /app
-CMD ["/app/sleep-infinity.sh"]
+EXPOSE 922
+CMD ["/usr/sbin/sshd", "-D"]
