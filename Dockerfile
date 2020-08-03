@@ -62,6 +62,8 @@ RUN pip3 install --upgrade pip \
       setuptools \
       six==1.12.0 \
       werkzeug==0.14.1
+      
+RUN mkdir /var/run/sshd
 
 # Copy files from repository.
 
