@@ -65,6 +65,8 @@ RUN pip3 install --upgrade pip \
       
 RUN mkdir /var/run/sshd
 
+RUN echo 'root:THEPASSWORDYOUCREATED' | chpasswd
+
 # Copy files from repository.
 
 COPY ./rootfs /
