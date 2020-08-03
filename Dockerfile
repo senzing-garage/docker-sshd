@@ -67,6 +67,8 @@ RUN mkdir /var/run/sshd
 
 RUN echo 'root:THEPASSWORDYOUCREATED' | chpasswd
 
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
 # Copy files from repository.
 
 COPY ./rootfs /
