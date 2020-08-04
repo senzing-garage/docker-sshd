@@ -1,9 +1,9 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.5.2
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-07-22
+ENV REFRESHED_AT=2020-08-04
 
-LABEL Name="senzing/sshd" \
+LABEL Name="senzing/template" \
       Maintainer="support@senzing.com" \
       Version="1.0.0"
 
@@ -38,8 +38,8 @@ RUN apt-get update \
     unixodbc-dev \
     vim \
  && rm -rf /var/lib/apt/lists/*
-
-# Install packages via pip.
+ 
+ # Install packages via pip.
 
 RUN pip3 install --upgrade pip \
  && pip3 install \
@@ -63,13 +63,15 @@ RUN pip3 install --upgrade pip \
       six==1.12.0 \
       werkzeug==0.14.1
       
+
 RUN mkdir /var/run/sshd
 
-RUN echo 'root:THEPASSWORDYOUCREATED' | chpasswd
+RUN echo 'root:xxx' | chpasswd
 
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
+
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 ENV NOTVISIBLE "in users profile"
@@ -79,8 +81,5 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 COPY ./rootfs /
 
-# Runtime execution.
-
-WORKDIR /app
-EXPOSE 922
+EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
