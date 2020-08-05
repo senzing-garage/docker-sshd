@@ -289,15 +289,15 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     sudo docker build \
-      --tag senzing/template \
-      https://github.com/senzing/template-docker.git
+      --tag senzing/sshd \
+      https://github.com/senzing/docker-sshd.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --tag senzing/template .
+    sudo docker build --tag senzing/sshd .
     ```
 
 1. **Option #3:** Using `make` command.
