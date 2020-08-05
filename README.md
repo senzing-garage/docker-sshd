@@ -253,6 +253,35 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
 1. For more examples of use, see [Examples of Docker](#examples-of-docker).
 
+### Ssh into the container
+
+Ater doing the `docker run` command above, open a new terminal to access the container and use the following ssh line.
+
+```console
+ssh root@localhost -p922
+```
+
+A message starting with the foloowing should appear, this is normal. 
+
+```console
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+```
+
+A section like the following should appear in the message, copy the line after "remove with:" and paste it into your terminal.
+
+```console
+Offending ECDSA key in /home/osboxes/.ssh/known_hosts:8
+  remove with:
+  ssh-keygen -f "/home/osboxes/.ssh/known_hosts" -R "[localhost]:922"
+  ```
+  
+Repeate the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
+
+```console
+ssh root@localhost -p922
+```
 ## Develop
 
 The following instructions are used when modifying and building the Docker image.
@@ -308,6 +337,13 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```
 
     Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
+    
+1. :pencil2: **Option #4:** Using `docker` command and local repository to change the ssh user's password.
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    sudo docker build --build-arg ROOT_PASS=<PASS_YOU_WANT> --tag senzing/sshd .
+    ```
 
 ## Examples
 
