@@ -12,7 +12,7 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 # Run as "root" for system installation.
 
 USER root
-ARG ROOT_PASS=Senzing-sshd
+ARG ROOT_PASS=senzingsshdpassword
 
 # Install packages via apt.
 
