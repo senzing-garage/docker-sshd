@@ -238,6 +238,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
       --interactive \
       --rm \
       --tty \
+      --publish 922:22 \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
@@ -247,7 +248,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
       ${SENZING_OPT_IBM_DIR_PARAMETER} \
       ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       ${SENZING_RUNAS_USER_PARAMETER} \
-      senzing/template
+      senzing/sshd
     ```
 
 1. For more examples of use, see [Examples of Docker](#examples-of-docker).
