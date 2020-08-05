@@ -3,7 +3,6 @@ FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2020-08-04
 
-ENV ROOT_PASS="yyy"
 LABEL Name="senzing/template" \
       Maintainer="support@senzing.com" \
       Version="1.0.0"
@@ -13,6 +12,7 @@ HEALTHCHECK CMD ["/app/healthcheck.sh"]
 # Run as "root" for system installation.
 
 USER root
+ARG ROOT_PASS=Senzing-sshd
 
 # Install packages via apt.
 
@@ -67,7 +67,7 @@ RUN pip3 install --upgrade pip \
 
 RUN mkdir /var/run/sshd
 
-RUN echo 'root:'${ROOT_PASS} | chpasswd
+RUN echo "root:${ROOT_PASS}" | chpasswd
 
 RUN sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config
 
