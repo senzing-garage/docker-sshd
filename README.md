@@ -261,7 +261,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
     ssh root@localhost -p922
     ```
 
-1. A message starting with the following should appear, this is normal. 
+1. A message starting with the following should appear, this is normal.
 
     ```console
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -282,7 +282,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
     ```console
     ssh root@localhost -p922
     ```
-    
+
 ## Develop
 
 The following instructions are used when modifying and building the Docker image.
@@ -338,7 +338,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```
 
     Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
-    
+
 1. :pencil2: **Option #4:** Using `docker` command and local repository to change the ssh user's password.
 
     ```console
