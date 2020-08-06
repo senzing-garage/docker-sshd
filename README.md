@@ -60,7 +60,6 @@ describing where we can improve.   Now on with the show...
 ## Related artifacts
 
 1. [DockerHub](https://hub.docker.com/r/senzing/xxxxxxxx)
-1. [Helm Chart](https://github.com/Senzing/charts/tree/master/charts/xxxxxxxx)
 
 ## Expectations
 
