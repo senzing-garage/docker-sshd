@@ -67,6 +67,7 @@ describing where we can improve.   Now on with the show...
 - **Time:** Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+  _ [ssh](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/ssh.md)
 
 ## Demonstrate using Docker
 
