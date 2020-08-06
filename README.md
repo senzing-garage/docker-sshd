@@ -261,7 +261,7 @@ Ater doing the `docker run` command above, open a new terminal to access the con
 ssh root@localhost -p922
 ```
 
-A message starting with the foloowing should appear, this is normal. 
+A message starting with the following should appear, this is normal. 
 
 ```console
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
