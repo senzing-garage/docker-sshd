@@ -277,11 +277,12 @@ Unset `*_PARAMETER` environment variables have no effect on the
       ssh-keygen -f "/home/osboxes/.ssh/known_hosts" -R "[localhost]:922"
       ```
   
-Repeate the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
+1. Repeat the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
 
-```console
-ssh root@localhost -p922
-```
+    ```console
+    ssh root@localhost -p922
+    ```
+    
 ## Develop
 
 The following instructions are used when modifying and building the Docker image.
