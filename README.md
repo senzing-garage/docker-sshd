@@ -60,7 +60,6 @@ describing where we can improve.   Now on with the show...
 ## Related artifacts
 
 1. [DockerHub](https://hub.docker.com/r/senzing/xxxxxxxx)
-1. [Helm Chart](https://github.com/Senzing/charts/tree/master/charts/xxxxxxxx)
 
 ## Expectations
 
@@ -68,6 +67,7 @@ describing where we can improve.   Now on with the show...
 - **Time:** Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+  _ [ssh](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/ssh.md)
 
 ## Demonstrate using Docker
 
@@ -238,6 +238,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
       --interactive \
       --rm \
       --tty \
+      --publish 922:22 \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
@@ -247,10 +248,40 @@ Unset `*_PARAMETER` environment variables have no effect on the
       ${SENZING_OPT_IBM_DIR_PARAMETER} \
       ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       ${SENZING_RUNAS_USER_PARAMETER} \
-      senzing/template
+      senzing/sshd
     ```
 
 1. For more examples of use, see [Examples of Docker](#examples-of-docker).
+
+### Ssh into the container
+
+1. After doing the `docker run` command above, open a new terminal to access the container and use the following ssh line.
+
+    ```console
+    ssh root@localhost -p922
+    ```
+
+1. A message starting with the following should appear, this is normal.
+
+    ```console
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    ```
+
+1. A section like the following should appear in the message, copy the line after "remove with:" and paste it into your terminal.
+
+    ```console
+    Offending ECDSA key in /home/osboxes/.ssh/known_hosts:8
+      remove with:
+      ssh-keygen -f "/home/osboxes/.ssh/known_hosts" -R "[localhost]:922"
+      ```
+  
+1. Repeat the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
+
+    ```console
+    ssh root@localhost -p922
+    ```
 
 ## Develop
 
@@ -288,15 +319,15 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     sudo docker build \
-      --tag senzing/template \
-      https://github.com/senzing/template-docker.git
+      --tag senzing/sshd \
+      https://github.com/senzing/docker-sshd.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --tag senzing/template .
+    sudo docker build --tag senzing/sshd .
     ```
 
 1. **Option #3:** Using `make` command.
@@ -307,6 +338,13 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```
 
     Note: `sudo make docker-build-development-cache` can be used to create cached Docker layers.
+
+1. :pencil2: **Option #4:** Using `docker` command and local repository to change the ssh user's password.
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    sudo docker build --build-arg ROOT_PASS=<PASS_YOU_WANT> --tag senzing/sshd .
+    ```
 
 ## Examples
 

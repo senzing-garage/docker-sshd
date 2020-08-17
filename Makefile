@@ -6,7 +6,7 @@ GIT_VERSION := $(shell git describe --always --tags --long --dirty | sed -e 's/\
 # Docker variables
 
 DOCKER_IMAGE_TAG ?= $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
-DOCKER_IMAGE_NAME := senzing/template
+DOCKER_IMAGE_NAME := senzing/sshd
 
 # -----------------------------------------------------------------------------
 # The first "make" target runs as default.
@@ -22,7 +22,7 @@ default: help
 .PHONY: docker-build
 docker-build: docker-rmi-for-build
 	docker build \
-	    --tag $(DOCKER_IMAGE_NAME) \
+		--tag $(DOCKER_IMAGE_NAME) \
 		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
 		.
 
