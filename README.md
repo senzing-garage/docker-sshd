@@ -2,14 +2,23 @@
 
 ## Synopsis
 
-This section should give 4-5 sentences on what the artifacts in this repository do.
+This docker container runs `sshd` so that `ssh` and `scp` can be used for remote access.
 
 ## Overview
 
-This section should be replaced with real "**Overview**" content after initial repository creation.
+In many cases, the functionality of `ssh` and `scp` are already supported.
+Examples:
 
-This repository shows best practices for creating a `docker-*` repository.
-See [best practices](docs/best-practices.md).
+1. Docker:  `docker exec` and `docker cp`
+1. Kubernetes:  `kubectl exec` and `kubectl cp`
+1. OpenShift: `oc exec` and `oc cp`
+
+But there are environments where there is no ability to "exec" nor "cp".
+In these environments, a `senzing/sshd` docker container can be used provide "exec" and "cp" capabilities
+via `ssh` and `scp`.
+Examples:
+
+1. AWS Elastic Container Service (ECS)
 
 ### Contents
 
@@ -22,8 +31,6 @@ See [best practices](docs/best-practices.md).
     1. [Docker volumes](#docker-volumes)
     1. [Docker network](#docker-network)
     1. [Docker user](#docker-user)
-    1. [Database support](#database-support)
-    1. [External database](#external-database)
     1. [Run Docker container](#run-docker-container)
 1. [Develop](#develop)
     1. [Prerequisites for development](#prerequisites-for-development)
@@ -59,15 +66,15 @@ describing where we can improve.   Now on with the show...
 
 ## Related artifacts
 
-1. [DockerHub](https://hub.docker.com/r/senzing/xxxxxxxx)
+1. [DockerHub](https://hub.docker.com/r/senzing/sshd)
 
 ## Expectations
 
-- **Space:** This repository and demonstration require 6 GB free disk space.
+- **Space:** This repository and demonstration require 1 GB free disk space.
 - **Time:** Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
-  _ [ssh](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/ssh.md)
+  - [ssh](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/ssh.md)
 
 ## Demonstrate using Docker
 
@@ -155,72 +162,30 @@ Inside the Docker container, Senzing artifacts will be located in `/opt/senzing`
     export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
     ```
 
-### Docker user
+### SSH port
 
-:thinking: **Optional:**  The Docker container runs as "USER 1001".
-Use if a different userid (UID) is required.
+:thinking: Normally port 22 is already in use for `ssh`.
+So a different port may be needed by the running docker container.
 
-1. :pencil2: Identify user.
-    1. **Example #1:** Use specific UID. User "0" is `root`.
-
-        ```console
-        export SENZING_RUNAS_USER="0"
-        ```
-
-    1. **Example #2:** Use current user.
-
-        ```console
-        export SENZING_RUNAS_USER=$(id -u)
-        ```
-
-1. Construct parameter for `docker run`.
+1. :thinking: **Optional:** See if port 22 is already in use.
    Example:
 
     ```console
-    export SENZING_RUNAS_USER_PARAMETER="--user ${SENZING_RUNAS_USER}"
-    ```
+    sudo lsof -i -P -n | grep LISTEN | grep :22
+    ````
 
-### Database support
-
-:thinking: **Optional:**  Some databases need additional support.
-For other databases, these steps may be skipped.
-
-1. **Db2:** See
-   [Support Db2](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-db2.md)
-   instructions to set `SENZING_OPT_IBM_DIR_PARAMETER`.
-1. **MS SQL:** See
-   [Support MS SQL](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-mssql.md)
-   instructions to set `SENZING_OPT_MICROSOFT_DIR_PARAMETER`.
-
-### External database
-
-:thinking: **Optional:**  Use if storing data in an external database.
-If not specified, the internal SQLite database will be used.
-
-1. :pencil2: Specify database.
+1. :pencil2: Choose port for docker container.
    Example:
 
     ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgresql
-    export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-    ```
-
-1. Construct Database URL.
-   Example:
-
-    ```console
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
+    export SENZING_SSHD_PORT=922
     ```
 
 1. Construct parameter for `docker run`.
    Example:
 
     ```console
-    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}"
+    export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT}:22"
     ```
 
 ### Run Docker container
@@ -238,16 +203,12 @@ Unset `*_PARAMETER` environment variables have no effect on the
       --interactive \
       --rm \
       --tty \
-      --publish 922:22 \
       --volume ${SENZING_DATA_VERSION_DIR}:/opt/senzing/data \
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
-      ${SENZING_DATABASE_URL_PARAMETER} \
       ${SENZING_NETWORK_PARAMETER} \
-      ${SENZING_OPT_IBM_DIR_PARAMETER} \
-      ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
-      ${SENZING_RUNAS_USER_PARAMETER} \
+      ${SENZING_SSHD_PORT_PARAMETER} \
       senzing/sshd
     ```
 
@@ -255,11 +216,24 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
 ### Ssh into the container
 
-1. After doing the `docker run` command above, open a new terminal to access the container and use the following ssh line.
+1. :pencil2: Identify the host running the `senzing/sshd` container.
+   Example:
 
     ```console
-    ssh root@localhost -p922
+    SENZING_SSHD_HOST=localhost
     ```
+
+1. `ssh` into the running docker container.
+   Example:
+
+    ```console
+    ssh root@${SENZING_SSHD_HOST} -p ${SENZING_SSHD_PORT:-22}
+    ```
+
+1. The default password is `senzingsshdpassword`.
+   However, if the docker image was built locally, it may have been changed during `docker build`.
+   See [Build Docker Image](#build-docker-image).
+
 
 1. A message starting with the following should appear, this is normal.
 
@@ -276,11 +250,11 @@ Unset `*_PARAMETER` environment variables have no effect on the
       remove with:
       ssh-keygen -f "/home/osboxes/.ssh/known_hosts" -R "[localhost]:922"
       ```
-  
+
 1. Repeat the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
 
     ```console
-    ssh root@localhost -p922
+    ssh root@localhost -p 922
     ```
 
 ## Develop
@@ -306,7 +280,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=template-docker
+    export GIT_REPOSITORY=docker-sshd
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
@@ -343,7 +317,10 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --build-arg ROOT_PASS=<PASS_YOU_WANT> --tag senzing/sshd .
+    sudo docker build \
+      --build-arg ROOT_PASS=<PASS_YOU_WANT> \
+      --tag senzing/sshd \
+      .
     ```
 
 ## Examples
