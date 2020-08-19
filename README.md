@@ -30,8 +30,9 @@ Examples:
     1. [Prerequisites for Docker](#prerequisites-for-docker)
     1. [Docker volumes](#docker-volumes)
     1. [Docker network](#docker-network)
-    1. [Docker user](#docker-user)
+    1. [SSH port](#ssh-port)
     1. [Run Docker container](#run-docker-container)
+    1. [SSH into container](#ssh-into-container)
 1. [Develop](#develop)
     1. [Prerequisites for development](#prerequisites-for-development)
     1. [Clone repository](#clone-repository)
@@ -214,7 +215,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
 1. For more examples of use, see [Examples of Docker](#examples-of-docker).
 
-### Ssh into the container
+### SSH into container
 
 1. :pencil2: Identify the host running the `senzing/sshd` container.
    Example:
