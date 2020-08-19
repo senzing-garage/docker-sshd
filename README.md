@@ -38,7 +38,6 @@ Examples:
     1. [Clone repository](#clone-repository)
     1. [Build Docker image](#build-docker-image)
 1. [Examples](#examples)
-    1. [Examples of CLI](#examples-of-cli)
     1. [Examples of Docker](#examples-of-docker)
 1. [Advanced](#advanced)
     1. [Configuration](#configuration)
@@ -235,7 +234,8 @@ Unset `*_PARAMETER` environment variables have no effect on the
    However, if the docker image was built locally, it may have been changed during `docker build`.
    See [Build Docker Image](#build-docker-image).
 
-1. If `senzing/sshd` has been deployed multiple times,
+1. :thinking: **Optional:**
+   If `senzing/sshd` has been deployed multiple times,
    the following message may appear when `ssh`-ing into the container:
 
     ```console
@@ -322,11 +322,6 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```
 
 ## Examples
-
-### Examples of CLI
-
-The following examples require initialization described in
-[Demonstrate using Command Line Interface](#demonstrate-using-command-line-interface).
 
 ### Examples of Docker
 
