@@ -185,7 +185,7 @@ So a different port may be needed by the running docker container.
    Example:
 
     ```console
-    export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT}:22"
+    export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT:-22}:22"
     ```
 
 ### Run Docker container
@@ -234,8 +234,8 @@ Unset `*_PARAMETER` environment variables have no effect on the
    However, if the docker image was built locally, it may have been changed during `docker build`.
    See [Build Docker Image](#build-docker-image).
 
-
-1. A message starting with the following should appear, this is normal.
+1. If `senzing/sshd` has been deployed multiple times,
+   the following message may appear when `ssh`-ing into the container:
 
     ```console
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -243,18 +243,15 @@ Unset `*_PARAMETER` environment variables have no effect on the
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     ```
 
-1. A section like the following should appear in the message, copy the line after "remove with:" and paste it into your terminal.
+    This is a good thing,
+    it's mean to prevent
+    [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack).
+    However in this case, it prevents access to ever-changing docker containers.
+    The message usually shows a remedy.
+    Example:
 
     ```console
-    Offending ECDSA key in /home/osboxes/.ssh/known_hosts:8
-      remove with:
-      ssh-keygen -f "/home/osboxes/.ssh/known_hosts" -R "[localhost]:922"
-      ```
-
-1. Repeat the ssh command to access the container. The default password is "senzingsshdpassword." If you would like to change said password go to [Build Docker Image](https://github.com/Senzing/docker-sshd/tree/issue-3.macy.1#build-docker-image)
-
-    ```console
-    ssh root@localhost -p 922
+    ssh-keygen -f "/home/senzing/.ssh/known_hosts" -R "[localhost]:922"
     ```
 
 ## Develop
