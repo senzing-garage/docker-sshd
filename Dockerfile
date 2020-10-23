@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.5.2
+ARG BASE_IMAGE=senzing/senzing-base:1.5.5
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-08-04
+ENV REFRESHED_AT=2020-10-23
 
 LABEL Name="senzing/template" \
       Maintainer="support@senzing.com" \
-      Version="1.0.0"
+      Version="1.0.1"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -15,8 +15,6 @@ USER root
 ARG ROOT_PASS=senzingsshdpassword
 
 # Install packages via apt.
-
-RUN apt-get update && apt-get install -y openssh-server
 
 RUN apt-get update \
  && apt-get -y install \
@@ -29,6 +27,7 @@ RUN apt-get update \
     less \
     net-tools \
     odbc-postgresql \
+    openssh-server \
     procps \
     pstack \
     python-pyodbc \
@@ -39,8 +38,8 @@ RUN apt-get update \
     unixodbc-dev \
     vim \
  && rm -rf /var/lib/apt/lists/*
- 
- # Install packages via pip.
+
+# Install packages via pip.
 
 RUN pip3 install --upgrade pip \
  && pip3 install \
@@ -63,20 +62,21 @@ RUN pip3 install --upgrade pip \
       setuptools \
       six==1.12.0 \
       werkzeug==0.14.1
-      
-
-RUN mkdir /var/run/sshd
-
-RUN echo "root:${ROOT_PASS}" | chpasswd
-
-RUN sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config
-
-# SSH login fix. Otherwise user is kicked off after login
-
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 ENV NOTVISIBLE "in users profile"
-RUN echo "export VISIBLE=now" >> /etc/profile
+
+# Configure sshd.
+
+RUN mkdir /var/run/sshd \
+ && echo "root:${ROOT_PASS}" | chpasswd \
+ && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
+ && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
+ && echo "export VISIBLE=now" >> /etc/profile \
+ && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib:/opt/senzing/g2/lib/debian:/opt/IBM/db2/clidriver/lib" >> /root/.bashrc \
+ && echo "export ODBCSYSINI=/etc/opt/senzing" >> /root/.bashrc \
+ && echo "export PATH=${PATH}:/opt/senzing/g2/python:/opt/IBM/db2/clidriver/adm:/opt/IBM/db2/clidriver/bin" >> /root/.bashrc \
+ && echo "export PYTHONPATH=/opt/senzing/g2/python" >> /root/.bashrc \
+ && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc
 
 # Copy files from repository.
 
