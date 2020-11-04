@@ -61,7 +61,8 @@ RUN pip3 install --upgrade pip \
       python-socketio==3.1.2 \
       setuptools \
       six==1.12.0 \
-      werkzeug==0.14.1
+      werkzeug==0.14.1 \
+      psycopg2-binary
 
 ENV NOTVISIBLE "in users profile"
 
