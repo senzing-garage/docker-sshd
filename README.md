@@ -188,6 +188,15 @@ So a different port may be needed by the running docker container.
     export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT:-22}:22"
     ```
 
+### Set sshd password
+
+:thinking: **Optional** The default password set for the sshd containers is `senzingsshdpassword`. However, this can be set by setting the following variable
+
+:pencil2: Set the `SENZING_SSHD_PASSWORD` variable to change the password to access the sshd container
+```console
+export SENZING_SSHD_PASSWORD=<Pass_You_Want>
+```
+
 ### Run Docker container
 
 Although the `Docker run` command looks complex,
@@ -200,6 +209,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
     ```console
     sudo docker run \
+      -- env ROOT_PASS ${SENZING_SSHD_PASSWORD} \
       --interactive \
       --rm \
       --tty \
