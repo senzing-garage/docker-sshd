@@ -31,6 +31,7 @@ Examples:
     1. [Docker volumes](#docker-volumes)
     1. [Docker network](#docker-network)
     1. [SSH port](#ssh-port)
+    1. [Set sshd password](#set-sshd-password)
     1. [Run Docker container](#run-docker-container)
     1. [SSH into container](#ssh-into-container)
 1. [Develop](#develop)
