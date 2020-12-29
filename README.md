@@ -210,7 +210,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
     ```console
     sudo docker run \
-      -- env ROOT_PASS ${SENZING_SSHD_PASSWORD} \
+      --env ROOT_PASS ${SENZING_SSHD_PASSWORD} \
       --interactive \
       --rm \
       --tty \
