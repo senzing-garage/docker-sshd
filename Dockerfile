@@ -5,14 +5,13 @@ ENV REFRESHED_AT=2020-10-23
 
 LABEL Name="senzing/template" \
       Maintainer="support@senzing.com" \
-      Version="1.0.1"
+      Version="1.0.3"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 # Run as "root" for system installation.
 
 USER root
-ENV ROOT_PASS=senzingsshdpassword
 
 # Install packages via apt.
 
@@ -83,4 +82,7 @@ RUN mkdir /var/run/sshd \
 COPY ./rootfs /
 
 EXPOSE 22
-CMD ["echo", "root:${ROOT_PASS}", "|", "chpasswd", "&&", "/usr/sbin/sshd", "-D"]
+
+ENV ROOT_PASSWORD=senzingsshdpassword
+
+CMD ["/app/docker-entrypoint.sh"]
