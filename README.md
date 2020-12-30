@@ -210,7 +210,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
     ```console
     sudo docker run \
-      --env ROOT_PASS=${SENZING_SSHD_PASSWORD} \
+      --env ROOT_PASSWORD=${SENZING_SSHD_PASSWORD} \
       --interactive \
       --rm \
       --tty \
@@ -327,7 +327,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo docker build \
-      --build-arg ROOT_PASS=<PASS_YOU_WANT> \
+      --build-arg ROOT_PASSWORD=<PASS_YOU_WANT> \
       --tag senzing/sshd \
       .
     ```
