@@ -31,6 +31,7 @@ Examples:
     1. [Docker volumes](#docker-volumes)
     1. [Docker network](#docker-network)
     1. [SSH port](#ssh-port)
+    1. [Set sshd password](#set-sshd-password)
     1. [Run Docker container](#run-docker-container)
     1. [SSH into container](#ssh-into-container)
 1. [Develop](#develop)
@@ -188,6 +189,15 @@ So a different port may be needed by the running docker container.
     export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT:-22}:22"
     ```
 
+### Set sshd password
+
+:thinking: **Optional** The default password set for the sshd containers is `senzingsshdpassword`. However, this can be set by setting the following variable
+
+:pencil2: Set the `SENZING_SSHD_PASSWORD` variable to change the password to access the sshd container
+```console
+export SENZING_SSHD_PASSWORD=<Pass_You_Want>
+```
+
 ### Run Docker container
 
 Although the `Docker run` command looks complex,
@@ -200,6 +210,7 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
     ```console
     sudo docker run \
+      --env ROOT_PASSWORD=${SENZING_SSHD_PASSWORD} \
       --interactive \
       --rm \
       --tty \
@@ -316,7 +327,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo docker build \
-      --build-arg ROOT_PASS=<PASS_YOU_WANT> \
+      --build-arg ROOT_PASSWORD=<PASS_YOU_WANT> \
       --tag senzing/sshd \
       .
     ```

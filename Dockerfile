@@ -5,14 +5,13 @@ ENV REFRESHED_AT=2020-10-23
 
 LABEL Name="senzing/template" \
       Maintainer="support@senzing.com" \
-      Version="1.0.1"
+      Version="1.0.3"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 # Run as "root" for system installation.
 
 USER root
-ARG ROOT_PASS=senzingsshdpassword
 
 # Install packages via apt.
 
@@ -69,7 +68,6 @@ ENV NOTVISIBLE "in users profile"
 # Configure sshd.
 
 RUN mkdir /var/run/sshd \
- && echo "root:${ROOT_PASS}" | chpasswd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
  && echo "export VISIBLE=now" >> /etc/profile \
@@ -84,4 +82,7 @@ RUN mkdir /var/run/sshd \
 COPY ./rootfs /
 
 EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+
+ENV ROOT_PASSWORD=senzingsshdpassword
+
+CMD ["/app/docker-entrypoint.sh"]
