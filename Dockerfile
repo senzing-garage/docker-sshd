@@ -69,7 +69,7 @@ RUN pip3 install --upgrade pip \
 
 ENV NOTVISIBLE "in users profile"
 
-ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='false'
+ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
 
 # Configure sshd.
 
