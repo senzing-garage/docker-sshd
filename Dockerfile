@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.5.5
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2021-2-11
+ENV REFRESHED_AT=2021-3-11
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
