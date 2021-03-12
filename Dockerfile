@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.5.5
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-10-23
+ENV REFRESHED_AT=2021-3-11
 
-LABEL Name="senzing/template" \
+LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.0.3"
+      Version="1.1.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -68,6 +68,8 @@ RUN pip3 install --upgrade pip \
       psycopg2
 
 ENV NOTVISIBLE "in users profile"
+
+ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
 
 # Configure sshd.
 
