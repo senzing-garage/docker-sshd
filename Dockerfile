@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.5.5
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2021-3-11
+ENV REFRESHED_AT=2021-4-16
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
@@ -38,6 +38,7 @@ RUN apt-get update \
     tree \
     unixodbc \
     unixodbc-dev \
+    unzip \
     vim \
     zip \
  && rm -rf /var/lib/apt/lists/*
