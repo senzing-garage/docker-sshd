@@ -63,7 +63,8 @@ RUN mkdir /var/run/sshd \
  && echo "export ODBCSYSINI=/etc/opt/senzing" >> /root/.bashrc \
  && echo "export PATH=${PATH}:/opt/senzing/g2/python:/opt/IBM/db2/clidriver/adm:/opt/IBM/db2/clidriver/bin" >> /root/.bashrc \
  && echo "export PYTHONPATH=/opt/senzing/g2/python" >> /root/.bashrc \
- && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc
+ && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc \
+ && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /root/.bashrc
 
 # Copy files from repository.
 
