@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added to 1.2.1
 
-- Set performance warning to show per dockerfile
+- Set performance warning variable to true in dockerfile
 
 ## [1.2.0] - 2021-04-20
 
