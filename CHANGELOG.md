@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added to 1.2.2
 
-- Update to Senzing base 1.6.0
+- Updated to senzing/senzing-base:1.6.0
 
 - ## [1.2.1] - 2021-07-12
 
