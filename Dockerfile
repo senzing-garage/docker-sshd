@@ -1,11 +1,11 @@
 ARG BASE_IMAGE=senzing/senzing-base:1.6.1
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2021-07-15
+ENV REFRESHED_AT=2021-07-23
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.3"
+      Version="1.2.4"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -18,7 +18,6 @@ USER root
 RUN apt-get update \
  && apt-get -y install \
     elfutils \
-    fio \
     htop \
     iotop \
     ipython3 \
@@ -26,20 +25,15 @@ RUN apt-get update \
     less \
     libpq-dev \
     net-tools \
-    odbc-postgresql \
     openssh-server \
     procps \
     pstack \
-    python-dev \
-    python-pyodbc \
-    python-setuptools \
+    python3-setuptools \
     strace \
     telnet \
     tree \
-    unixodbc \
     unixodbc-dev \
     unzip \
-    vim \
     zip \
  && rm -rf /var/lib/apt/lists/*
 
@@ -48,6 +42,20 @@ RUN apt-get update \
 COPY requirements.txt ./
 RUN pip3 install --upgrade pip \
  && pip3 install -r requirements.txt
+
+# work around until Debian repos catch up to modern versions of fio --Dr. Ant
+
+RUN mkdir /tmp/fio \
+ && cd /tmp/fio \
+ && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.27.zip \
+ && unzip fio-3.27.zip \
+ && cd fio-fio-3.27/ \
+ && ./configure \
+ && make \
+ && make install \
+ && fio --version \
+ && cd \
+ && rm -rf /tmp/fio
 
 ENV NOTVISIBLE "in users profile"
 
