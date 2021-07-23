@@ -9,7 +9,7 @@ jinja2==2.11.3
 markupsafe==1.1.1
 pandas
 ptable
-pyodbc
+pyodbc==4.0.31
 pysnooper
 python-engineio==3.8.2.post1
 python-levenshtein
