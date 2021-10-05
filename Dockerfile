@@ -41,7 +41,7 @@ RUN apt-get update \
 
 COPY requirements.txt ./
 RUN pip3 install --upgrade pip \
- && pip3 install -r requirements.txt
+ && pip3 install -r requirements.txt \
  && rm /requirements.txt
  
 # work around until Debian repos catch up to modern versions of fio --Dr. Ant
