@@ -11,7 +11,7 @@ pandas
 ptable
 pyodbc==4.0.31
 pysnooper
-python-engineio==3.8.2.post1
+python-engineio==3.9.0
 python-levenshtein
 python-socketio==3.1.2
 setuptools
