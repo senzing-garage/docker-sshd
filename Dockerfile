@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=senzing/senzing-base:1.6.1
+ARG BASE_IMAGE=senzing/senzing-base:1.6.2
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2021-07-23
+ENV REFRESHED_AT=2021-10-11
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.4"
+      Version="1.2.5"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -43,7 +43,7 @@ COPY requirements.txt ./
 RUN pip3 install --upgrade pip \
  && pip3 install -r requirements.txt \
  && rm /requirements.txt
- 
+
 # work around until Debian repos catch up to modern versions of fio --Dr. Ant
 
 RUN mkdir /tmp/fio \
