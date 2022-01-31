@@ -18,15 +18,15 @@ USER root
 RUN apt-get update \
       && apt-get -y install \
       # build-essential \
-      # curl \
+      curl \
       # elfutils \
       # gdb \
-      # htop \
-      # iotop \
+      htop \
+      iotop \
       # ipython3 \
       # itop \
-      # jq \
-      # less \
+      jq \
+      less \
       # libbz2-dev \
       # libffi-dev \
       # libgdbm-dev \
@@ -36,26 +36,26 @@ RUN apt-get update \
       # libsqlite3-dev \
       # libssl-dev \
       # lsb-release \
-      # net-tools \
+      net-tools \
       # odbc-postgresql \
-      # odbcinst \
+      odbcinst \
       openssh-server \
       postgresql-client \
-      # procps \
+      procps \
       python3-dev \
       python3-pip \
       # python3-setuptools \
-      # sqlite3 \
-      # strace \
+      sqlite3 \
+      strace \
       # telnet \
       # tk-dev \
-      # tree \
+      tree \
       # unixodbc \
       unixodbc-dev \
       unzip \
-      # vim \
+      vim \
       wget \
-      # zip \
+      zip \
       && rm -rf /var/lib/apt/lists/*
 
 # Install packages via pip.
