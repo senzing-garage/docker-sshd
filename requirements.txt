@@ -8,6 +8,7 @@ itsdangerous==1.1.0
 jinja2==2.11.3
 markupsafe==1.1.1
 pandas
+psutil==5.8.0
 ptable
 pyodbc==4.0.31
 pysnooper
