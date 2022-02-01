@@ -17,40 +17,22 @@ USER root
 
 RUN apt-get update \
       && apt-get -y install \
-      # build-essential \
       curl \
-      # elfutils \
-      # gdb \
       htop \
       iotop \
-      # ipython3 \
-      # itop \
       jq \
       less \
-      # libbz2-dev \
-      # libffi-dev \
-      # libgdbm-dev \
-      # libncursesw5-dev \
       libpq-dev \
-      # libreadline-dev \
-      # libsqlite3-dev \
-      # libssl-dev \
-      # lsb-release \
       net-tools \
-      # odbc-postgresql \
       odbcinst \
       openssh-server \
       postgresql-client \
       procps \
       python3-dev \
       python3-pip \
-      # python3-setuptools \
       sqlite3 \
       strace \
-      # telnet \
-      # tk-dev \
       tree \
-      # unixodbc \
       unixodbc-dev \
       unzip \
       vim \
