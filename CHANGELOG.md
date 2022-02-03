@@ -6,9 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.7] - 2022-02-03
+
+### Changed in 1.2.7
+
+- fio build moved to new stage
+- replaced vim with elvis-tiny
+- updated requirments.txt to pin package versions
+- set the TERM var
+
 ## [1.2.6] - 2022-02-01
 
-### Changed in 1.2.4
+### Changed in 1.2.6
 
 - updated to debian 11.2 base
 - trimmed installed tools

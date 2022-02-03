@@ -97,21 +97,6 @@ RUN pip3 install --upgrade pip \
  && pip3 install -r requirements.txt \
  && rm requirements.txt
 
-# work around until Debian repos catch up to modern versions of fio --Dr. Ant
-# Debian package for Debian 11.2 on 27 Jan is at fio@3.25-2, which still has
-# vulnerabilities not found in 3.27
-# RUN mkdir /tmp/fio \
-#  && cd /tmp/fio \
-#  && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.27.zip \
-#  && unzip fio-3.27.zip \
-#  && cd fio-fio-3.27/ \
-#  && ./configure \
-#  && make \
-#  && make install \
-#  && fio --version \
-#  && cd \
-#  && rm -rf /tmp/fio
-
 ENV NOTVISIBLE "in users profile"
 
 ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
