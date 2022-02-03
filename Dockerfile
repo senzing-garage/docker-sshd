@@ -35,7 +35,7 @@ RUN apt-get update \
       tree \
       unixodbc-dev \
       unzip \
-      vim \
+      elvis-tiny \
       wget \
       zip \
  && rm -rf /var/lib/apt/lists/*
