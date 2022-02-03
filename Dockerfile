@@ -78,7 +78,7 @@ RUN mkdir /var/run/sshd \
  && echo "export PYTHONPATH=/opt/senzing/g2/python" >> /root/.bashrc \
  && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc \
  && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /root/.bashrc \
- && echo "export TERM=xterm" >> /etc/bash.bashrc \
+ && echo "export TERM=xterm" >> /root/.bashrc \
  && echo "export LC_ALL=C" >> /root/.bashrc \
  && echo "export LANGUAGE=C" >> /root/.bashrc
 
