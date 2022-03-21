@@ -4,17 +4,17 @@ ARG BASE_IMAGE=debian:11.2-slim@sha256:4c25ffa6ef572cf0d57da8c634769a08ae94529f7
 # Stage: builder
 # -----------------------------------------------------------------------------
 
-FROM ${BASE_IMAGE} as builder
+FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-02-03
+ENV REFRESHED_AT=2022-03-21
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.7"
+      Version="1.2.8"
 
-# Build arguments.
+# Run as "root" for system installation.
 
 USER root
 
@@ -47,13 +47,17 @@ RUN mkdir /tmp/fio \
 # Stage: Final
 # -----------------------------------------------------------------------------
 
-FROM ${BASE_IMAGE}
+# Create the runtime image.
 
-ENV REFRESHED_AT=2022-02-03
+FROM ${BASE_IMAGE} AS runner
+
+ENV REFRESHED_AT=2022-03-21
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.7"
+      Version="1.2.8"
+
+# Define health check.
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -66,11 +70,13 @@ USER root
 RUN apt-get update \
  && apt-get -y install \
       curl \
+      elvis-tiny \
       htop \
       iotop \
       jq \
       less \
       libpq-dev \
+      libssl1.1 \
       net-tools \
       odbcinst \
       openssh-server \
@@ -83,30 +89,25 @@ RUN apt-get update \
       tree \
       unixodbc-dev \
       unzip \
-      elvis-tiny \
       wget \
       zip \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-COPY --from=builder "/usr/local/bin/fio" "/usr/local/bin/fio"
 
 # Install packages via pip.
 
-COPY requirements.txt ./
+COPY requirements.txt .
 RUN pip3 install --upgrade pip \
  && pip3 install -r requirements.txt \
- && rm requirements.txt
-
-ENV NOTVISIBLE "in users profile"
-
-ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
+ && rm /requirements.txt
 
 # Configure sshd.
 
 RUN mkdir /var/run/sshd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
- && echo "export VISIBLE=now" >> /etc/profile \
+ && echo "export LANGUAGE=C" >> /root/.bashrc \
+ && echo "export LC_ALL=C" >> /root/.bashrc \
  && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib:/opt/senzing/g2/lib/debian:/opt/IBM/db2/clidriver/lib" >> /root/.bashrc \
  && echo "export ODBCSYSINI=/etc/opt/senzing" >> /root/.bashrc \
  && echo "export PATH=${PATH}:/opt/senzing/g2/python:/opt/IBM/db2/clidriver/adm:/opt/IBM/db2/clidriver/bin" >> /root/.bashrc \
@@ -114,15 +115,26 @@ RUN mkdir /var/run/sshd \
  && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc \
  && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /root/.bashrc \
  && echo "export TERM=xterm" >> /root/.bashrc \
- && echo "export LC_ALL=C" >> /root/.bashrc \
- && echo "export LANGUAGE=C" >> /root/.bashrc
+ && echo "export VISIBLE=now" >> /etc/profile
 
 # Copy files from repository.
 
 COPY ./rootfs /
 
+# Copy files from prior stages.
+
+COPY --from=builder "/usr/local/bin/fio" "/usr/local/bin/fio"
+
+# The port for ssh is 22.
+
 EXPOSE 22
 
+# Runtime environment variables.
+
+ENV NOTVISIBLE "in users profile"
 ENV ROOT_PASSWORD=senzingsshdpassword
+ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
+
+# Runtime execution.
 
 CMD ["/app/docker-entrypoint.sh"]
