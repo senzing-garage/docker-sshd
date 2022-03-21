@@ -125,6 +125,8 @@ COPY ./rootfs /
 
 COPY --from=builder "/usr/local/bin/fio" "/usr/local/bin/fio"
 
+# The port for ssh is 22.
+
 EXPOSE 22
 
 # Runtime environment variables.
