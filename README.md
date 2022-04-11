@@ -303,7 +303,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```console
     sudo docker build \
       --tag senzing/sshd \
-      https://github.com/senzing/docker-sshd.git
+      https://github.com/senzing/docker-sshd.git#main
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
