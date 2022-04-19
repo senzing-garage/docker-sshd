@@ -10,19 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed in 1.2.10
 
- - Updated python dependencies in `requirements.txt`
+- Updated python dependencies in `requirements.txt`
 
 ## [1.2.9] - 2022-04-01
 
 ### Changed in 1.2.9
 
- - Updated to Debian 11.3-slim
+- Updated to Debian 11.3-slim
 
 ## [1.2.8] - 2022-03-21
 
 ### Changed in 1.2.8
 
- - Support for `libcrypto` and `libssl`
+- Support for `libcrypto` and `libssl`
 
 ## [1.2.7] - 2022-02-03
 
