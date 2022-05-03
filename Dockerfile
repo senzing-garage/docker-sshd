@@ -8,11 +8,11 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-04-19
+ENV REFRESHED_AT=2022-05-02
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.10"
+      Version="1.2.11"
 
 # Run as "root" for system installation.
 
@@ -51,11 +51,11 @@ RUN mkdir /tmp/fio \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2022-04-19
+ENV REFRESHED_AT=2022-05-02
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.10"
+      Version="1.2.11"
 
 # Define health check.
 
@@ -107,7 +107,7 @@ RUN mkdir /var/run/sshd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
  && echo "export LANGUAGE=C" >> /root/.bashrc \
- && echo "export LC_ALL=C" >> /root/.bashrc \
+ && echo "export LC_ALL=C.UTF-8" >> /root/.bashrc \
  && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib:/opt/senzing/g2/lib/debian:/opt/IBM/db2/clidriver/lib" >> /root/.bashrc \
  && echo "export ODBCSYSINI=/etc/opt/senzing" >> /root/.bashrc \
  && echo "export PATH=${PATH}:/opt/senzing/g2/python:/opt/IBM/db2/clidriver/adm:/opt/IBM/db2/clidriver/bin" >> /root/.bashrc \
