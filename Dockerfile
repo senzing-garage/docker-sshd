@@ -8,11 +8,11 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-05-16
+ENV REFRESHED_AT=2022-06-08
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.11"
+      Version="1.3.0"
 
 # Run as "root" for system installation.
 
@@ -51,11 +51,11 @@ RUN mkdir /tmp/fio \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2022-05-16
+ENV REFRESHED_AT=2022-06-08
 
 LABEL Name="senzing/sshd" \
       Maintainer="support@senzing.com" \
-      Version="1.2.11"
+      Version="1.3.0"
 
 # Define health check.
 
