@@ -3,6 +3,7 @@ ARG BASE_IMAGE=senzing/senzingapi-tools:latest
 ARG IMAGE_NAME="senzing/sshd"
 ARG IMAGE_MAINTAINER="support@senzing.com"
 ARG IMAGE_VERSION="1.3.0"
+
 # -----------------------------------------------------------------------------
 # Stage: builder
 # -----------------------------------------------------------------------------
@@ -19,14 +20,14 @@ USER root
 
 # Install packages via apt for building fio.
 
-RUN apt-get update \
- && apt-get -y install \
+RUN apt update \
+ && apt -y install \
       gcc \
       make \
       pkg-config \
       unzip \
       wget \
-      && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 # Work around until Debian repos catch up to modern versions of fio.
 
@@ -68,8 +69,8 @@ USER root
 
 # Install packages via apt.
 
-RUN apt-get update \
- && apt-get -y install \
+RUN apt update \
+ && apt -y install \
       elvis-tiny \
       htop \
       iotop \
@@ -86,7 +87,7 @@ RUN apt-get update \
       unzip \
       wget \
       zip \
- && apt-get clean \
+ && apt clean \
  && rm -rf /var/lib/apt/lists/*
 
 # Install packages via pip.
@@ -117,11 +118,11 @@ EXPOSE 22
 
 # Runtime environment variables.
 
-ENV NOTVISIBLE="in users profile" \
+ENV LC_ALL=C.UTF-8 \
+    NOTVISIBLE="in users profile" \
     ROOT_PASSWORD=senzingsshdpassword \
     SENZING_ETC_PATH=/etc/opt/senzing \
-    SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true' \
-    TERM=xterm
+    SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true
 
 # Runtime execution.
 
