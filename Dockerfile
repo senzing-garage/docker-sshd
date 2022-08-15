@@ -102,6 +102,18 @@ RUN pip3 install --upgrade pip \
 RUN mkdir /var/run/sshd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
+ && echo "export LANGUAGE=C" >> /etc/profile \
+ && echo "export LC_ALL=C.UTF-8" >> /etc/profile \
+ && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib" >> /etc/profile \
+ && echo "export PATH=${PATH}:/opt/senzing/g2/python" >> /etc/profile \
+ && echo "export PYTHONPATH=/opt/senzing/g2/python:/opt/senzing/g2/sdk/python" >> /etc/profile \
+ && echo "export PYTHONUNBUFFERED=1" >> /etc/profile \
+ && echo "export NOTVISIBLE='in users profile'" >> /etc/profile \
+ && echo "export ROOT_PASSWORD=senzingsshdpassword" >> /etc/profile \
+ && echo "export SENZING_DOCKER_LAUNCHED=true" >> /etc/profile \
+ && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /etc/profile \
+ && echo "export SENZING_SKIP_DATABASE_PERFORMANCE_TEST=true" >> /etc/profile \
+ && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /etc/profile \
  && echo "export VISIBLE=now" >> /etc/profile
 
 # Copy files from repository.
