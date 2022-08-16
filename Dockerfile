@@ -105,7 +105,7 @@ RUN mkdir /var/run/sshd \
  && echo "export LANGUAGE=C" >> /etc/profile \
  && echo "export LC_ALL=C.UTF-8" >> /etc/profile \
  && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib" >> /etc/profile \
- && echo "export PATH=${PATH}:/opt/senzing/g2/python" >> /etc/profile \
+ && echo "export PATH=${PATH}" >> /etc/profile \
  && echo "export PYTHONPATH=/opt/senzing/g2/python:/opt/senzing/g2/sdk/python" >> /etc/profile \
  && echo "export PYTHONUNBUFFERED=1" >> /etc/profile \
  && echo "export NOTVISIBLE='in users profile'" >> /etc/profile \
