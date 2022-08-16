@@ -111,7 +111,6 @@ RUN mkdir /var/run/sshd \
  && echo "export NOTVISIBLE='in users profile'" >> /etc/profile \
  && echo "export ROOT_PASSWORD=senzingsshdpassword" >> /etc/profile \
  && echo "export SENZING_DOCKER_LAUNCHED=true" >> /etc/profile \
- && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /etc/profile \
  && echo "export SENZING_SKIP_DATABASE_PERFORMANCE_TEST=true" >> /etc/profile \
  && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /etc/profile \
  && echo "export VISIBLE=now" >> /etc/profile
