@@ -75,7 +75,6 @@ RUN apt update \
       htop \
       iotop \
       jq \
-      less \
       net-tools \
       openssh-server \
       postgresql-client \
@@ -129,8 +128,7 @@ EXPOSE 22
 
 # Runtime environment variables.
 
-ENV LC_ALL=C.UTF-8 \
-    NOTVISIBLE="in users profile" \
+ENV NOTVISIBLE="in users profile" \
     ROOT_PASSWORD=senzingsshdpassword \
     SENZING_ETC_PATH=/etc/opt/senzing \
     SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true
