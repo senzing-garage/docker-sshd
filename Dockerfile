@@ -69,8 +69,8 @@ USER root
 
 # Install packages via apt.
 
-RUN apt update \
- && apt -y install \
+RUN apt-get update \
+ && apt-get -y install \
       elvis-tiny \
       htop \
       iotop \
@@ -86,7 +86,7 @@ RUN apt update \
       unzip \
       wget \
       zip \
- && apt clean \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 # Install packages via pip.
