@@ -20,8 +20,8 @@ USER root
 
 # Install packages via apt for building fio.
 
-RUN apt update \
- && apt -y install \
+RUN apt-get update \
+ && apt-get -y install \
       gcc \
       make \
       pkg-config \
