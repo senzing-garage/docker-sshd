@@ -1,4 +1,8 @@
-ARG BASE_IMAGE=debian:11.4-slim@sha256:a811e62769a642241b168ac34f615fb02da863307a14c4432cea8e5a0f9782b8
+ARG BASE_IMAGE=senzing/senzingapi-tools:3.2.0
+
+ARG IMAGE_NAME="senzing/sshd"
+ARG IMAGE_MAINTAINER="support@senzing.com"
+ARG IMAGE_VERSION="1.4.0"
 
 # -----------------------------------------------------------------------------
 # Stage: builder
@@ -8,11 +12,7 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-08-12
-
-LABEL Name="senzing/sshd" \
-      Maintainer="support@senzing.com" \
-      Version="1.3.0"
+ENV REFRESHED_AT=2022-08-26
 
 # Run as "root" for system installation.
 
@@ -27,15 +27,15 @@ RUN apt-get update \
       pkg-config \
       unzip \
       wget \
-      && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 # Work around until Debian repos catch up to modern versions of fio.
 
 RUN mkdir /tmp/fio \
  && cd /tmp/fio \
- && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.27.zip \
- && unzip fio-3.27.zip \
- && cd fio-fio-3.27/ \
+ && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.30.zip \
+ && unzip fio-3.30.zip \
+ && cd fio-fio-3.30/ \
  && ./configure \
  && make \
  && make install \
@@ -51,11 +51,13 @@ RUN mkdir /tmp/fio \
 
 FROM ${BASE_IMAGE} AS runner
 
-ENV REFRESHED_AT=2022-08-12
+ARG IMAGE_NAME
+ARG IMAGE_MAINTAINER
+ARG IMAGE_VERSION
 
-LABEL Name="senzing/sshd" \
-      Maintainer="support@senzing.com" \
-      Version="1.3.0"
+LABEL Name=${IMAGE_NAME} \
+      Maintainer=${IMAGE_MAINTAINER} \
+      Version=${IMAGE_VERSION}
 
 # Define health check.
 
@@ -69,25 +71,18 @@ USER root
 
 RUN apt-get update \
  && apt-get -y install \
-      curl \
       elvis-tiny \
       htop \
       iotop \
       jq \
-      less \
-      libpq-dev \
-      libssl1.1 \
       net-tools \
-      odbcinst \
       openssh-server \
       postgresql-client \
       procps \
       python3-dev \
       python3-pip \
-      sqlite3 \
       strace \
       tree \
-      unixodbc-dev \
       unzip \
       wget \
       zip \
@@ -106,15 +101,17 @@ RUN pip3 install --upgrade pip \
 RUN mkdir /var/run/sshd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
- && echo "export LANGUAGE=C" >> /root/.bashrc \
- && echo "export LC_ALL=C.UTF-8" >> /root/.bashrc \
- && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib:/opt/senzing/g2/lib/debian:/opt/IBM/db2/clidriver/lib" >> /root/.bashrc \
- && echo "export ODBCSYSINI=/etc/opt/senzing" >> /root/.bashrc \
- && echo "export PATH=${PATH}:/opt/senzing/g2/python:/opt/IBM/db2/clidriver/adm:/opt/IBM/db2/clidriver/bin" >> /root/.bashrc \
- && echo "export PYTHONPATH=/opt/senzing/g2/python" >> /root/.bashrc \
- && echo "export SENZING_ETC_PATH=/etc/opt/senzing" >> /root/.bashrc \
- && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /root/.bashrc \
- && echo "export TERM=xterm" >> /root/.bashrc \
+ && echo "export LANGUAGE=C" >> /etc/profile \
+ && echo "export LC_ALL=C.UTF-8" >> /etc/profile \
+ && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib" >> /etc/profile \
+ && echo "export PATH=${PATH}" >> /etc/profile \
+ && echo "export PYTHONPATH=/opt/senzing/g2/python:/opt/senzing/g2/sdk/python" >> /etc/profile \
+ && echo "export PYTHONUNBUFFERED=1" >> /etc/profile \
+ && echo "export NOTVISIBLE='in users profile'" >> /etc/profile \
+ && echo "export ROOT_PASSWORD=senzingsshdpassword" >> /etc/profile \
+ && echo "export SENZING_DOCKER_LAUNCHED=true" >> /etc/profile \
+ && echo "export SENZING_SKIP_DATABASE_PERFORMANCE_TEST=true" >> /etc/profile \
+ && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /etc/profile \
  && echo "export VISIBLE=now" >> /etc/profile
 
 # Copy files from repository.
@@ -131,9 +128,10 @@ EXPOSE 22
 
 # Runtime environment variables.
 
-ENV NOTVISIBLE "in users profile"
-ENV ROOT_PASSWORD=senzingsshdpassword
-ENV SENZING_SSHD_SHOW_PERFORMANCE_WARNING='true'
+ENV NOTVISIBLE="in users profile" \
+    ROOT_PASSWORD=senzingsshdpassword \
+    SENZING_ETC_PATH=/etc/opt/senzing \
+    SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true
 
 # Runtime execution.
 
