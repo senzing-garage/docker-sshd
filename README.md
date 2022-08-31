@@ -195,6 +195,7 @@ So a different port may be needed by the running docker container.
 :thinking: **Optional** The default password set for the sshd containers is `senzingsshdpassword`. However, this can be set by setting the following variable
 
 :pencil2: Set the `SENZING_SSHD_PASSWORD` variable to change the password to access the sshd container
+
 ```console
 export SENZING_SSHD_PASSWORD=<Pass_You_Want>
 ```
@@ -381,4 +382,3 @@ along with any direct or indirect dependencies of the primary software being con
 As for any pre-built image usage,
 it is the image user's responsibility to ensure that any use of this image complies
 with any relevant licenses for all software contained within.
-
