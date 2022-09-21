@@ -20,6 +20,8 @@ USER root
 
 # Install packages via apt for building fio.
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update \
  && apt-get -y install \
       gcc \
@@ -69,6 +71,8 @@ USER root
 
 # Install packages via apt.
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update \
  && apt-get -y install \
       elvis-tiny \
@@ -83,6 +87,7 @@ RUN apt-get update \
       python3-pip \
       strace \
       tree \
+      unixodbc-dev \
       unzip \
       wget \
       zip \
