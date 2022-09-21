@@ -91,7 +91,6 @@ RUN apt-get update \
       unzip \
       wget \
       zip \
- && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 # Install packages via pip.
