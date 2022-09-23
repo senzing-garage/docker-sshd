@@ -12,7 +12,7 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-08-26
+ENV REFRESHED_AT=2022-09-23
 
 # Run as "root" for system installation.
 
@@ -85,9 +85,9 @@ RUN apt-get update \
       procps \
       python3-dev \
       python3-pip \
+      python3-pyodbc \
       strace \
       tree \
-      unixodbc-dev \
       unzip \
       wget \
       zip \
