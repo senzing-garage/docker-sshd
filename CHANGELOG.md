@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
+## [1.4.2] - 2022-09-28
+
+### Changed in 1.4.2
+
+- In `Dockerfile`, updated FROM instruction to `senzing/senzingapi-tools:3.3.0`
+- In `requirements.txt`, updated:
+  - setuptools==65.4.0
+
 ## [1.4.1] - 2022-09-23
 
 ### Changed in 1.4.1
@@ -142,7 +150,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added to 1.0.1
 
 - Update to `senzing/senzing-base:1.5.5`
-    - Adds environment variable for root user
+  - Adds environment variable for root user
 
 ## [1.0.0] - 2020-08-19
 
