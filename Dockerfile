@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingapi-tools:3.3.2
+ARG BASE_IMAGE=senzing/senzingapi-tools:3.4.0
 
 ARG IMAGE_NAME="senzing/sshd"
 ARG IMAGE_MAINTAINER="support@senzing.com"
@@ -12,7 +12,7 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2022-10-27
+ENV REFRESHED_AT=2023-01-12
 
 # Run as "root" for system installation.
 
