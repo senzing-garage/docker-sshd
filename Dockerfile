@@ -2,7 +2,7 @@ ARG BASE_IMAGE=senzing/senzingapi-tools:3.5.2
 
 ARG IMAGE_NAME="senzing/sshd"
 ARG IMAGE_MAINTAINER="support@senzing.com"
-ARG IMAGE_VERSION="1.4.6"
+ARG IMAGE_VERSION="1.4.7"
 
 # -----------------------------------------------------------------------------
 # Stage: builder
