@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 -
+## [1.4.9] - 2023-06-29
+
+### Changed in 1.4.9
+
+- In `Dockerfile`, updated FROM instruction to `senzing/senzingapi-runtime:3.6.3`
+- In `requirements.txt`, updated:
+  - pandas==2.0.3
+  - setuptools==68.0.0
 
 ## [1.4.8] - 2023-06-15
 
