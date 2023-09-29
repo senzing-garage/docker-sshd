@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 -
+
+## [1.4.10] - 2023-09-29
+
+### Changed in 1.4.10
+
+- In `Dockerfile`, updated FROM instruction to `senzing/senzingapi-runtime:3.7.1`
+- In `requirements.txt`, updated:
+  - Flask-SocketIO==5.3.6
+  - Flask==2.3.3
+  - orjson==3.9.7
+  - pandas==2.1.1
+  - prettytable==3.9.0
+  - PySnooper==1.2.0
+  - python-engineio==4.7.1
+  - python-socketio==5.9.0
+  - setuptools==68.2.2
+  - VisiData==2.11.1
+
 ## [1.4.9] - 2023-06-29
 
 ### Changed in 1.4.9
