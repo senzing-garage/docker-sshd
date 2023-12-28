@@ -1,5 +1,17 @@
 # docker-sshd
 
+If you are beginning your journey with
+[Senzing](https://senzing.com/),
+please start with
+[Senzing Quick Start guides](https://docs.senzing.com/quickstart/).
+
+You are in the
+[Senzing Garage](https://github.com/senzing-garage)
+where projects are "tinkered" on.
+Although this GitHub repository may help you understand an approach to using Senzing,
+it's not considered to be "production ready" and is not considered to be part of the Senzing product.
+Heck, it may not even be appropriate for your application of Senzing!
+
 ## Synopsis
 
 This docker container runs `sshd` so that `ssh` and `scp` can be used for remote access.
@@ -47,8 +59,8 @@ Examples:
 - **Space:** This repository and demonstration require 1 GB free disk space.
 - **Time:** Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
-  - [ssh](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/ssh.md)
+  - [Docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
+  - [ssh](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/ssh.md)
 
 ## Demonstrate using Docker
 
@@ -58,7 +70,7 @@ Examples:
 These are "one-time tasks" which may already have been completed.
 
 1. The following software programs need to be installed:
-    1. [docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+    1. [docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
 
 ### SSH port
 
@@ -161,8 +173,8 @@ Unset `*_PARAMETER` environment variables have no effect on the
 
 Configuration values specified by environment variable or command line parameter.
 
-- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
-- **[SENZING_DEBUG](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
+- **[SENZING_DATABASE_URL](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
+- **[SENZING_DEBUG](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
 
 ## License
 
@@ -172,7 +184,7 @@ for the software container in this Docker image.
 Note that this license does not permit further distribution.
 
 This Docker image may also contain software from the
-[Senzing GitHub community](https://github.com/Senzing/)
+[Senzing GitHub community](https://github.com/senzing-garage/)
 under the
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
