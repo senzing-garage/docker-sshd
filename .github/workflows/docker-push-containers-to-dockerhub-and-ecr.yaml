@@ -1,4 +1,4 @@
-name: docker-push-containers-to-dockerhub-and-ecr.yaml
+name: docker push containers to dockerhub and ecr
 
 on:
   push:
@@ -10,14 +10,14 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout
-    uses: Senzing/build-resources/.github/workflows/docker-push-containers-to-dockerhub-and-ecr.yaml@main
+    secrets:
+      AWS_DOCKER_ACCOUNT_ID: ${{ secrets.AWS_DOCKER_ACCOUNT_ID }}
+      DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    uses: senzing-factory/build-resources/.github/workflows/docker-push-containers-to-dockerhub-and-ecr.yaml@v1
     with:
       build-options: "--push"
       docker-image-repository: senzing/sshd
       ecr-image-repository: senzing/sshd
       image-tag: ${{ github.ref_name }}
       platforms: "linux/amd64,linux/arm64"
-    secrets:
-      AWS_DOCKER_ACCOUNT_ID: ${{ secrets.AWS_DOCKER_ACCOUNT_ID }}
-      DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
