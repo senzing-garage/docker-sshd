@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
+## [1.4.12] - 2024-06-10
+
+### Changed in 1.4.12
+
+- Update `pqsl` to version 14.12
+- Fixed issue with setting root password
+
 ## [1.4.11] - 2024-05-22
 
 ### Changed in 1.4.11

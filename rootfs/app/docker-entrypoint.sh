@@ -3,7 +3,7 @@
 if [ ${SENZING_SSHD_SHOW_PERFORMANCE_WARNING} != "true" ]
 then
 
-	> /etc/motd
+    > /etc/motd
 fi
 
 # when the root password is set externally, update the password
