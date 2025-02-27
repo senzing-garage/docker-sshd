@@ -35,9 +35,9 @@ RUN apt-get update \
 
 RUN mkdir /tmp/fio \
   && cd /tmp/fio \
-  && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.30.zip \
-  && unzip fio-3.30.zip \
-  && cd fio-fio-3.30/ \
+  && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.39.zip \
+  && unzip fio-3.39.zip \
+  && cd fio-fio-3.39/ \
   && ./configure \
   && make \
   && make install \
@@ -96,6 +96,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install packages via pip.
+
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY requirements.txt .
 RUN pip3 install --upgrade pip \
