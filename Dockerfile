@@ -1,8 +1,8 @@
-ARG BASE_IMAGE=senzing/senzingapi-tools:3.10.3
+ARG BASE_IMAGE=senzing/senzingapi-tools:3.12.5
 
 ARG IMAGE_NAME="senzing/sshd"
 ARG IMAGE_MAINTAINER="support@senzing.com"
-ARG IMAGE_VERSION="1.4.12"
+ARG IMAGE_VERSION="1.5.0"
 
 # -----------------------------------------------------------------------------
 # Stage: builder
@@ -12,7 +12,7 @@ FROM ${BASE_IMAGE} AS builder
 
 # Set Shell to use for RUN commands in builder step.
 
-ENV REFRESHED_AT=2024-06-24
+ENV REFRESHED_AT=2025-03-06
 
 # Run as "root" for system installation.
 
@@ -39,27 +39,27 @@ RUN apt-get update \
 
 RUN mkdir /tmp/fio \
  && cd /tmp/fio \
- && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.30.zip \
- && unzip fio-3.30.zip \
- && cd fio-fio-3.30/ \
+ && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.39.zip \
+ && unzip fio-3.39.zip \
+ && cd fio-fio-3.39/ \
  && ./configure \
  && make \
  && make install \
  && fio --version \
  && cd \
  && rm -rf /tmp/fio
- 
- # Create and activate virtual environment.
- 
- RUN python3 -m venv /app/venv
- ENV PATH="/app/venv/bin:$PATH" 
- 
- # pip install Python dependencies.
- 
- COPY requirements.txt .
- RUN pip3 install --upgrade pip \
-  && pip3 install -r requirements.txt \
-  && rm /requirements.txt
+
+# Create and activate virtual environment.
+
+RUN python3 -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+
+# pip install Python dependencies.
+
+COPY requirements.txt .
+RUN pip3 install --upgrade pip \
+ && pip3 install -r requirements.txt \
+ && rm /requirements.txt
 
 # -----------------------------------------------------------------------------
 # Stage: Final
@@ -111,37 +111,26 @@ RUN apt-get update \
  && apt-get -y install postgresql-client-14 \
  && rm -rf /var/lib/apt/lists/*
 
- # Copy python virtual environment from the builder image.
+# Copy python virtual environment from the builder image.
 
- COPY --from=builder /app/venv /app/venv
- 
- # Activate virtual environment.
+COPY --from=builder /app/venv /app/venv
 
- ENV VIRTUAL_ENV=/app/venv
- ENV PATH="/app/venv/bin:${PATH}"
+# Activate virtual environment.
+
+ENV VIRTUAL_ENV=/app/venv
+ENV PATH="/app/venv/bin:${PATH}"
 
 # Configure sshd.
 
 RUN mkdir /var/run/sshd \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
- && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
- && echo "export LANGUAGE=C" >> /etc/profile \
- && echo "export LC_ALL=C.UTF-8" >> /etc/profile \
- && echo "export LD_LIBRARY_PATH=/opt/senzing/g2/lib" >> /etc/profile \
- && echo "export PATH=${PATH}" >> /etc/profile \
- && echo "export PYTHONPATH=/opt/senzing/g2/python:/opt/senzing/g2/sdk/python" >> /etc/profile \
- && echo "export PYTHONUNBUFFERED=1" >> /etc/profile \
- && echo "export NOTVISIBLE='in users profile'" >> /etc/profile \
- && echo "export ROOT_PASSWORD=senzingsshdpassword" >> /etc/profile \
- && echo "export SENZING_DOCKER_LAUNCHED=true" >> /etc/profile \
- && echo "export SENZING_SKIP_DATABASE_PERFORMANCE_TEST=true" >> /etc/profile \
- && echo "export SENZING_SSHD_SHOW_PERFORMANCE_WARNING=true" >> /etc/profile \
- && echo "export VISIBLE=now" >> /etc/profile
+ && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 # Copy files from repository.
 
 COPY ./rootfs /
-RUN /app/update-motd.sh
+RUN /app/update-motd.sh \
+ && /app/update-etc-profile.sh
 
 # Copy files from prior stages.
 
