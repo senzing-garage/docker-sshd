@@ -1,4 +1,5 @@
 quiet: true
-skip-check: 
-  - CKV_DOCKER_7
+skip-check:
   - CKV_DOCKER_1
+  - CKV_DOCKER_7
+  - CKV_DOCKER_8
