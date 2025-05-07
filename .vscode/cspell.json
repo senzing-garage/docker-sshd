@@ -1,0 +1,48 @@
+{
+  // Version of the setting file.  Always 0.2
+  "version": "0.2",
+  // language - current active spelling language
+  "language": "en",
+  // words - list of words to be always considered correct
+  "words": [
+      "Senzing",
+      "CODEOWNER",
+      "ICLA",
+      "CCLA",
+      "PYTHONPATH",
+      "senzingsshdpassword",
+      "NOTVISIBLE",
+      "PYTHONUNBUFFERED",
+      "Visi",
+      "setuptools",
+      "socketio",
+      "engineio",
+      "prettytable",
+      "orjson",
+      "alnum",
+      "toplevel",
+      "projectatomic",
+      "Dockerfiles",
+      "rootfs",
+      "loginuid",
+      "venv",
+      "pgdg",
+      "pyodbc",
+      "procps",
+      "iotop",
+      "noninteractive",
+      "senzingapi",
+      "stackoverflow",
+      "dockerhub",
+      "buildx",
+      "pydevproject",
+      "pqsl",
+      "csvkit",
+      "senzingdata",
+      "libcrypto",
+      "psycopg"
+    ],
+  "ignorePaths": [
+    ".git/**"
+  ]
+}
