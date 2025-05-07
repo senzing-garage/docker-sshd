@@ -1,13 +1,9 @@
 # docker-sshd
 
-If you are beginning your journey with
-[Senzing](https://senzing.com/),
-please start with
-[Senzing Quick Start guides](https://docs.senzing.com/quickstart/).
+If you are beginning your journey with [Senzing],
+please start with [Senzing Quick Start guides].
 
-You are in the
-[Senzing Garage](https://github.com/senzing-garage)
-where projects are "tinkered" on.
+You are in the [Senzing Garage] where projects are "tinkered" on.
 Although this GitHub repository may help you understand an approach to using Senzing,
 it's not considered to be "production ready" and is not considered to be part of the Senzing product.
 Heck, it may not even be appropriate for your application of Senzing!
@@ -21,8 +17,8 @@ This docker container runs `sshd` so that `ssh` and `scp` can be used for remote
 In many cases, the functionality of `ssh` and `scp` are already supported.
 Examples:
 
-1. Docker:  `docker exec` and `docker cp`
-1. Kubernetes:  `kubectl exec` and `kubectl cp`
+1. Docker: `docker exec` and `docker cp`
+1. Kubernetes: `kubectl exec` and `kubectl cp`
 1. OpenShift: `oc exec` and `oc cp`
 
 But there are environments where there is no ability to "exec" nor "cp".
@@ -34,17 +30,17 @@ Examples:
 
 ### Contents
 
-1. [Legend](#legend)
-1. [Expectations](#expectations)
-1. [Demonstrate using Docker](#demonstrate-using-docker)
-    1. [Prerequisites for Docker](#prerequisites-for-docker)
-    1. [SSH port](#ssh-port)
-    1. [Set sshd password](#set-sshd-password)
-    1. [Run Docker container](#run-docker-container)
-    1. [SSH into container](#ssh-into-container)
-1. [Configuration](#configuration)
-1. [License](#license)
-1. [References](#references)
+1. [Legend]
+1. [Expectations]
+1. [Demonstrate using Docker]
+   1. [Prerequisites for Docker]
+   1. [SSH port]
+   1. [Set sshd password]
+   1. [Run Docker container]
+   1. [SSH into container]
+1. [Configuration]
+1. [License]
+1. [References]
 
 ### Legend
 
@@ -59,8 +55,8 @@ Examples:
 - **Space:** This repository and demonstration require 1 GB free disk space.
 - **Time:** Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [Docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
-  - [ssh](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/ssh.md)
+  - [Docker]
+  - [ssh]
 
 ## Demonstrate using Docker
 
@@ -70,7 +66,7 @@ Examples:
 These are "one-time tasks" which may already have been completed.
 
 1. The following software programs need to be installed:
-    1. [docker](https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md)
+   1. [docker]
 
 ### SSH port
 
@@ -80,23 +76,23 @@ So a different port may be needed by the running docker container.
 1. :thinking: **Optional:** See if port 22 is already in use.
    Example:
 
-    ```console
-    sudo lsof -i -P -n | grep LISTEN | grep :22
-    ````
+   ```console
+   sudo lsof -i -P -n | grep LISTEN | grep :22
+   ```
 
 1. :pencil2: Choose port for docker container.
    Example:
 
-    ```console
-    export SENZING_SSHD_PORT=922
-    ```
+   ```console
+   export SENZING_SSHD_PORT=922
+   ```
 
 1. Construct parameter for `docker run`.
    Example:
 
-    ```console
-    export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT:-22}:22"
-    ```
+   ```console
+   export SENZING_SSHD_PORT_PARAMETER="--publish ${SENZING_SSHD_PORT:-22}:22"
+   ```
 
 ### Set sshd password
 
@@ -118,75 +114,69 @@ Unset `*_PARAMETER` environment variables have no effect on the
 1. Run Docker container.
    Example:
 
-    ```console
-    sudo docker run \
-      --env ROOT_PASSWORD=${SENZING_SSHD_PASSWORD} \
-      --interactive \
-      --rm \
-      --tty \
-      ${SENZING_SSHD_PORT_PARAMETER} \
-      senzing/sshd
-    ```
+   ```console
+   sudo docker run \
+     --env ROOT_PASSWORD=${SENZING_SSHD_PASSWORD} \
+     --interactive \
+     --rm \
+     --tty \
+     ${SENZING_SSHD_PORT_PARAMETER} \
+     senzing/sshd
+   ```
 
 ### SSH into container
 
 1. :pencil2: Identify the host running the `senzing/sshd` container.
    Example:
 
-    ```console
-    SENZING_SSHD_HOST=localhost
-    ```
+   ```console
+   SENZING_SSHD_HOST=localhost
+   ```
 
 1. `ssh` into the running docker container.
    Example:
 
-    ```console
-    ssh root@${SENZING_SSHD_HOST} -p ${SENZING_SSHD_PORT:-22}
-    ```
+   ```console
+   ssh root@${SENZING_SSHD_HOST} -p ${SENZING_SSHD_PORT:-22}
+   ```
 
 1. The default password is `senzingsshdpassword`.
    However, if the docker image was built locally, it may have been changed during `docker build`.
-   See [Build Docker Image](development.md#build-docker-image).
+   See [Build Docker Image].
 
 1. :thinking: **Optional:**
    If `senzing/sshd` has been deployed multiple times,
    the following message may appear when `ssh`-ing into the container:
 
-    ```console
-    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    ```
+   ```console
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+   @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+   ```
 
-    This is a good thing,
-    it's mean to prevent
-    [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack).
-    However in this case, it prevents access to ever-changing docker containers.
-    The message usually shows a remedy.
-    Example:
+   This is a good thing, it's mean to prevent [man-in-the-middle attacks].
+   However in this case, it prevents access to ever-changing docker containers.
+   The message usually shows a remedy.
+   Example:
 
-    ```console
-    ssh-keygen -f "/home/senzing/.ssh/known_hosts" -R "[localhost]:922"
-    ```
+   ```console
+   ssh-keygen -f "/home/senzing/.ssh/known_hosts" -R "[localhost]:922"
+   ```
 
 ## Configuration
 
 Configuration values specified by environment variable or command line parameter.
 
-- **[SENZING_DATABASE_URL](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url)**
-- **[SENZING_DEBUG](https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug)**
+- **[SENZING_DATABASE_URL]**
+- **[SENZING_DEBUG]**
 
 ## License
 
-View
-[license information](https://senzing.com/end-user-license-agreement/)
-for the software container in this Docker image.
+View [license information] for the software container in this Docker image.
 Note that this license does not permit further distribution.
 
 This Docker image may also contain software from the
-[Senzing GitHub community](https://github.com/senzing-garage/)
-under the
-[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+[Senzing GitHub community] under the [Apache License 2.0].
 
 Further, as with all Docker images,
 this likely also contains other software which may be under other licenses
@@ -199,8 +189,36 @@ with any relevant licenses for all software contained within.
 
 ## References
 
-- [Development](docs/development.md)
-- [Errors](docs/errors.md)
-- [Examples](docs/examples.md)
+- [Development]
+- [Errors]
+- [Examples]
 - Related artifacts
-  - [DockerHub](https://hub.docker.com/r/senzing/sshd)
+  - [DockerHub]
+
+[Apache License 2.0]: https://www.apache.org/licenses/LICENSE-2.0
+[Build Docker Image]: development.md#build-docker-image
+[Configuration]: #configuration
+[Demonstrate using Docker]: #demonstrate-using-docker
+[Development]: docs/development.m
+[Docker]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/docker.md
+[DockerHub]: https://hub.docker.com/r/senzing/sshd
+[Errors]: docs/errors.md
+[Examples]: docs/examples.md
+[Expectations]: #expectations
+[Legend]: #legend
+[license information]: https://senzing.com/end-user-license-agreement/
+[License]: #license
+[man-in-the-middle attacks]: https://en.wikipedia.org/wiki/Man-in-the-middle_attack
+[Prerequisites for Docker]: #prerequisites-for-docker
+[References]: #references
+[Run Docker container]: #run-docker-container
+[Senzing Garage]: https://github.com/senzing-garage
+[Senzing GitHub community]: https://github.com/senzing-garage/
+[Senzing Quick Start guides]: https://docs.senzing.com/quickstart/
+[SENZING_DATABASE_URL]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_database_url
+[SENZING_DEBUG]: https://github.com/senzing-garage/knowledge-base/blob/main/lists/environment-variables.md#senzing_debug
+[Senzing]: https://senzing.com/
+[Set sshd password]: #set-sshd-password
+[SSH into container]: #ssh-into-container
+[SSH port]: #ssh-port
+[ssh]: https://github.com/senzing-garage/knowledge-base/blob/main/WHATIS/ssh.md

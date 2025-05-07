@@ -213,7 +213,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - fio build moved to new stage
 - replaced vim with elvis-tiny
-- updated requirments.txt to pin package versions
+- updated requirements.txt to pin package versions
 - set the TERM var
 
 ## [1.2.6] - 2022-02-01
@@ -252,7 +252,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added to 1.2.1
 
-- Improve permornace warning messaging
+- Improve performance warning messaging
 
 ## [1.2.0] - 2021-04-20
 
