@@ -23,7 +23,7 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
- && apt-get -y install \
+ && apt-get -y --no-install-recommends install \
       gcc \
       make \
       pkg-config \
@@ -34,20 +34,6 @@ RUN apt-get update \
       unzip \
       wget \
  && rm -rf /var/lib/apt/lists/*
-
-# Work around until Debian repos catch up to modern versions of fio.
-
-RUN mkdir /tmp/fio \
- && cd /tmp/fio \
- && wget https://github.com/axboe/fio/archive/refs/tags/fio-3.39.zip \
- && unzip fio-3.39.zip \
- && cd fio-fio-3.39/ \
- && ./configure \
- && make \
- && make install \
- && fio --version \
- && cd \
- && rm -rf /tmp/fio
 
 # Create and activate virtual environment.
 
@@ -90,8 +76,9 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
- && apt-get -y install \
+ && apt-get -y --no-install-recommends install \
       elvis-tiny \
+      fio \
       htop \
       iotop \
       jq \
@@ -131,10 +118,6 @@ RUN mkdir /var/run/sshd \
 COPY ./rootfs /
 RUN /app/update-motd.sh \
  && /app/update-etc-profile.sh
-
-# Copy files from prior stages.
-
-COPY --from=builder "/usr/local/bin/fio" "/usr/local/bin/fio"
 
 # The port for ssh is 22.
 
