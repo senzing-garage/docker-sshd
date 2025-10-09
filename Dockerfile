@@ -24,7 +24,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get -y --no-install-recommends install \
-      fio \
       gcc \
       make \
       pkg-config \
@@ -79,6 +78,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get -y --no-install-recommends install \
       elvis-tiny \
+      fio \
       htop \
       iotop \
       jq \
@@ -118,10 +118,6 @@ RUN mkdir /var/run/sshd \
 COPY ./rootfs /
 RUN /app/update-motd.sh \
  && /app/update-etc-profile.sh
-
-# Copy files from prior stages.
-
-COPY --from=builder "/usr/local/bin/fio" "/usr/local/bin/fio"
 
 # The port for ssh is 22.
 
