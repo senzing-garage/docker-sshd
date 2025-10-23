@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=senzing/senzingapi-tools:3.12.8@sha256:dd393e76374a8c925892418877e767cf1afbe609f1aa107a4336227c348f1448
+ARG BASE_IMAGE=senzing/senzingapi-tools:3.13.0@sha256:9ed9399ffa9003e9e32f94b26cc46a46d629efaec60457f60be8a5109eb9c9cb
 
 ARG IMAGE_NAME="senzing/sshd"
 ARG IMAGE_MAINTAINER="support@senzing.com"
@@ -77,7 +77,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get -y --no-install-recommends install \
-      elvis-tiny \
       fio \
       htop \
       iotop \
@@ -109,7 +108,7 @@ ENV PATH="/app/venv/bin:${PATH}"
 
 # Configure sshd.
 
-RUN mkdir /var/run/sshd \
+RUN mkdir /var/run/sshd || true \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
