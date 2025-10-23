@@ -108,7 +108,7 @@ ENV PATH="/app/venv/bin:${PATH}"
 
 # Configure sshd.
 
-RUN mkdir /var/run/sshd \
+RUN mkdir /var/run/sshd || true \
  && sed -i -e '$aPermitRootLogin yes' /etc/ssh/sshd_config \
  && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
