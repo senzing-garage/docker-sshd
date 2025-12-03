@@ -2,21 +2,26 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "alnum",
-    "buildx",
     "CCLA",
     "CODEOWNER",
-    "csvkit",
     "Dockerfiles",
+    "ICLA",
+    "NOTVISIBLE",
+    "PYTHONPATH",
+    "PYTHONUNBUFFERED",
+    "Senzing",
+    "Visi",
+    "alnum",
+    "buildx",
+    "csvkit",
     "dockerhub",
     "engineio",
-    "ICLA",
+    "esbenp",
     "ignorefile",
     "iotop",
     "libcrypto",
     "loginuid",
     "noninteractive",
-    "NOTVISIBLE",
     "orjson",
     "pgdg",
     "pqsl",
@@ -26,10 +31,7 @@
     "psycopg",
     "pydevproject",
     "pyodbc",
-    "PYTHONPATH",
-    "PYTHONUNBUFFERED",
     "rootfs",
-    "Senzing",
     "senzingapi",
     "senzingdata",
     "senzingsshdpassword",
@@ -37,8 +39,9 @@
     "socketio",
     "stackoverflow",
     "toplevel",
-    "venv",
-    "Visi"
+    "venv"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }
