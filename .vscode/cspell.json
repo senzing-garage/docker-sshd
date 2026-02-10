@@ -10,11 +10,13 @@
     "csvkit",
     "Dockerfiles",
     "dockerhub",
+    "docktermj",
     "engineio",
     "esbenp",
     "ICLA",
     "ignorefile",
     "iotop",
+    "kernelsam",
     "libcrypto",
     "loginuid",
     "noninteractive",
@@ -42,5 +44,7 @@
     "venv",
     "Visi"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }
